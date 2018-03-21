@@ -26,32 +26,32 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
  * http://www.baeldung.com/rest-api-spring-oauth2-angularjs
  *
  */
-//@Configuration
-//@PropertySource({ "classpath:persistence.properties" })
-//@EnableAuthorizationServer
+@Configuration
+@PropertySource({ "classpath:persistence.properties" })
+@EnableAuthorizationServer
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter{
-//
-//	@Autowired
-//	private Environment env;
-//	
-//	
-//	@Autowired
-//	@Qualifier("authenticationManagerBean")
-//	private AuthenticationManager authenticationManager;
-//
-//	@Value("classpath:schema.sql")
-//	private Resource schemaScript;
-//	
-//	@Value("classpath:data.sql")
-//	private Resource dataScript;
-//	
-//	@Override
-//	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception{
-//		oauthServer
-//		.tokenKeyAccess("permitAll()")
-//		.checkTokenAccess("isAuthenticated()");
-//	}
-//	
+
+	@Autowired
+	private Environment env;
+	
+	
+	@Autowired
+	@Qualifier("authenticationManagerBean")
+	private AuthenticationManager authenticationManager;
+
+	@Value("classpath:schema.sql")
+	private Resource schemaScript;
+	
+	@Value("classpath:data.sql")
+	private Resource dataScript;
+	
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception{
+		oauthServer
+		.tokenKeyAccess("permitAll()")
+		.checkTokenAccess("isAuthenticated()");
+	}
+	
 //	@Override
 //	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 //		clients.jdbc(dataSource())
@@ -70,34 +70,34 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
 //	
 //	
 //
-//	@Bean
-//	public DataSourceInitializer datasourceInitializer (DataSource dataSource) {
-//		DataSourceInitializer initializer = new DataSourceInitializer();
-//		initializer.setDataSource(dataSource);
-//		initializer.setDatabasePopulator(databasePopulator());
-//		return initializer;
-//	}
-//	
-//	private DatabasePopulator databasePopulator() {
-//		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-//		populator.addScript(schemaScript);
-//		return populator;
-//	}
-//	
-//	@Bean
-//	public DataSource dataSource() {
-//		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-//		dataSource.setUrl(env.getProperty("jdbc.url"));
-//		dataSource.setUsername(env.getProperty("jdbc.user"));
-//		dataSource.setPassword(env.getProperty("jdbc.pass"));
-//		return dataSource;
-//	}
-//	
-//	@Bean
-//	public TokenStore tokenStore() {
-//		return new JdbcTokenStore(dataSource());
-//	}
-//	
+	@Bean
+	public DataSourceInitializer datasourceInitializer (DataSource dataSource) {
+		DataSourceInitializer initializer = new DataSourceInitializer();
+		initializer.setDataSource(dataSource);
+		initializer.setDatabasePopulator(databasePopulator());
+		return initializer;
+	}
+	
+	private DatabasePopulator databasePopulator() {
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScript(schemaScript);
+		return populator;
+	}
+	
+	@Bean
+	public DataSource dataSource() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		dataSource.setUrl(env.getProperty("jdbc.url"));
+		dataSource.setUsername(env.getProperty("jdbc.user"));
+		dataSource.setPassword(env.getProperty("jdbc.pass"));
+		return dataSource;
+	}
+	
+	@Bean
+	public TokenStore tokenStore() {
+		return new JdbcTokenStore(dataSource());
+	}
+	
 	
 }

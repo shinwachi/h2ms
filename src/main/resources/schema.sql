@@ -1,7 +1,7 @@
 drop table if exists oauth_client_details;
 create table oauth_client_details (
-  client_id VARCHAR(255) PRIMARY KEY,
-  resource_ids VARCHAR(255),
+  client_id text PRIMARY KEY,
+  resource_ids BIGINT,
   client_secret VARCHAR(255),
   scope VARCHAR(255),
   authorized_grant_types VARCHAR(255),
@@ -14,25 +14,25 @@ create table oauth_client_details (
 );
 
 create table if not exists oauth_client_token (
-  token_id VARCHAR(255),
+  token_id BIGINT,
   token BYTEA,
-  authentication_id VARCHAR(255) PRIMARY KEY,
+  authentication_id BIGSERIAL PRIMARY KEY,
   user_name VARCHAR(255),
-  client_id VARCHAR(255)
+  client_id text
 );
 
 create table if not exists oauth_access_token (
-  token_id VARCHAR(255),
+  token_id BIGINT,
   token BYTEA,
-  authentication_id VARCHAR(255) PRIMARY KEY,
+  authentication_id BIGSERIAL PRIMARY KEY,
   user_name VARCHAR(255),
-  client_id VARCHAR(255),
+  client_id text,
   authentication BYTEA,
   refresh_token VARCHAR(255)
 );
 
 create table if not exists oauth_refresh_token (
-  token_id VARCHAR(255),
+  token_id BIGINT,
   token BYTEA,
   authentication BYTEA
 );
@@ -42,8 +42,8 @@ create table if not exists oauth_code (
 );
 
 create table if not exists oauth_approvals (
-	userId VARCHAR(255),
-	clientId VARCHAR(255),
+	userId BIGINT,
+	clientId text,
 	scope VARCHAR(255),
 	status VARCHAR(10),
 	expiresAt TIMESTAMP,
@@ -51,7 +51,7 @@ create table if not exists oauth_approvals (
 );
 
 create table if not exists ClientDetails (
-  appId VARCHAR(255) PRIMARY KEY,
+  appId SERIAL PRIMARY KEY,
   resourceIds VARCHAR(255),
   appSecret VARCHAR(255),
   scope VARCHAR(255),
