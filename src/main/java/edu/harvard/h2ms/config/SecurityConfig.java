@@ -3,6 +3,7 @@ package edu.harvard.h2ms.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,6 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Bean CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
     	return new CustomBasicAuthenticationEntryPoint();
+    }
+    
+    /**
+     * This isn't absolutely necessary for password flow.  See:
+     * http://www.baeldung.com/rest-api-spring-oauth2-angularjs
+     * section 2.4. Security Configuration
+     * This enables form-login driven auth process
+     */
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+    	return super.authenticationManagerBean();
     }
 
 
