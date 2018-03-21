@@ -61,4 +61,4 @@ docker-compose up
 ## Credits
 
 Security Implementation based on Giau Ngo's tutorial: https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
-
+OAuth2 Tutorial: https://gigsterous.github.io/engineering/2017/03/01/spring-boot-4.html

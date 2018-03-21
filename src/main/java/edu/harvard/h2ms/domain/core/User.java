@@ -1,5 +1,8 @@
 package edu.harvard.h2ms.domain.core;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,10 +16,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.Transient;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "H2MSUSER")
-public class User {
+public class User implements UserDetails {
+	
+	static final long serialVersionUID = 1L;
 	
 	/* Properties */
 	private Long id;
@@ -29,6 +36,9 @@ public class User {
 	private String password;
 	private String passwordConfirm;
 	private Set<Role> roles;
+	
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -108,6 +118,37 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
 				+ ", email=" + email + ", notificationFrequency=" + notificationFrequency + "]";
+	}
+	
+	/////////////////////////////////////////////////////////////////////
+	// UserDetails functions
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		
+		return authorities;
+	}
+	
+	@Override
+	public String getUsername() {
+		
+		return email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }
