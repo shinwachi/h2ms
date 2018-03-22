@@ -14,7 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.mapping.List;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,12 +37,22 @@ public class User implements UserDetails {
 	private Set<Role> roles;
 	
 
-	@Column(name="authorities")
-	@ElementCollection(targetClass=Authority.class)
-	private List authorities;
+//	@Column(name="authorities")
+//	@ElementCollection(targetClass=Authority.class)
+//	private List authorities;
 	
+	private Set<GrantedAuthority> authorities;
+	
+	public void setAuthorities(Set<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
+	
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private String username;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -53,6 +62,10 @@ public class User implements UserDetails {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
 	}
 	
 	@Column(name = "FIRST_NAME")
@@ -66,6 +79,9 @@ public class User implements UserDetails {
 	@Column(name = "MIDDLE_NAME")
 	public String getMiddleName() {
 		return middleName;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
@@ -127,8 +143,9 @@ public class User implements UserDetails {
 	
 	/////////////////////////////////////////////////////////////////////
 	@Override
-	public Set<Authority> getAuthorities() {
-		final Set<Authority> authorities = new HashSet<Authority>();
+	@ElementCollection(targetClass = GrantedAuthority.class)
+	public Set<GrantedAuthority> getAuthorities() {
+//		final Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		
 		return authorities; // authorities.toArray();
 	}
@@ -155,6 +172,17 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+	
+	
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
