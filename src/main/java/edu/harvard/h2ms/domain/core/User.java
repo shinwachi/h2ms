@@ -1,8 +1,6 @@
 package edu.harvard.h2ms.domain.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.annotation.Transient;
@@ -121,12 +120,11 @@ public class User implements UserDetails {
 	}
 	
 	/////////////////////////////////////////////////////////////////////
-	// UserDetails functions
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	public Set<GrantedAuthority> getAuthorities() {
+		final Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		
-		return authorities;
+		return authorities; // authorities.toArray();
 	}
 	
 	@Override
@@ -136,10 +134,12 @@ public class User implements UserDetails {
 	}
 	@Override
 	public boolean isAccountNonExpired() {
+		// never expire
 		return true;
 	}
 	@Override
 	public boolean isAccountNonLocked() {
+		// never lock
 		return true;
 	}
 	@Override
