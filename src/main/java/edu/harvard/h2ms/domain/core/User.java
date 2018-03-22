@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.mapping.List;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,6 +36,11 @@ public class User implements UserDetails {
 	private String password;
 	private String passwordConfirm;
 	private Set<Role> roles;
+	
+
+	@Column(name="authorities")
+	@ElementCollection(targetClass=Authority.class)
+	private List authorities;
 	
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
@@ -121,8 +127,8 @@ public class User implements UserDetails {
 	
 	/////////////////////////////////////////////////////////////////////
 	@Override
-	public Set<GrantedAuthority> getAuthorities() {
-		final Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+	public Set<Authority> getAuthorities() {
+		final Set<Authority> authorities = new HashSet<Authority>();
 		
 		return authorities; // authorities.toArray();
 	}

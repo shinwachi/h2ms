@@ -1,3 +1,4 @@
+
 package edu.harvard.h2ms;
 
 import org.slf4j.Logger;
@@ -26,3 +27,4 @@ public class H2MSRestAppInitializer {
 		SpringApplication.run(H2MSRestAppInitializer.class, args);
 	}
 }
+

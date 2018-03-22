@@ -1,5 +1,14 @@
 package edu.harvard.h2ms.service;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -7,12 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.harvard.h2ms.domain.admin.Email;
 import edu.harvard.h2ms.domain.core.Event;
-import edu.harvard.h2ms.repository.*;
-
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import edu.harvard.h2ms.repository.EventRepository;
+import edu.harvard.h2ms.repository.LocationRepository;
+import edu.harvard.h2ms.repository.ReaderRepository;
+import edu.harvard.h2ms.repository.UserRepository;
+import edu.harvard.h2ms.repository.WristBandRepository;
 
 /**
  * The Management Dashboard Service Implementor...
