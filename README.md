@@ -63,4 +63,5 @@ docker-compose up
 - Security Implementation based on Giau Ngo's tutorial: https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
 - OAuth2 implementation based on https://gigsterous.github.io/engineering/2017/03/01/spring-boot-4.html
 - OAuth2 tests based on http://www.baeldung.com/oauth-api-testing-with-spring-mvc
+- Reset password based on https://www.codebyamir.com/blog/forgot-password-feature-with-java-and-spring-boot
 
