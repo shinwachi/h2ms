@@ -7,6 +7,11 @@
 ./mvnw install
 ```
 
+To get OAuth2 token via curl:
+
+curl -X POST -d "client_id=mobile_android&client_secret=secret&grant_type=password&username=demo&password=1234" http://localhost:8080/rest/oauth/token
+
+
 ## Run
 
 And then launch the server:
