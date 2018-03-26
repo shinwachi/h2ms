@@ -1,5 +1,7 @@
 package edu.harvard.h2ms.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -13,5 +15,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	User findByMiddleName( String middleName);
 	User findByLastName( String lastName);
 	User findByEmail( String email);
+	User findByResetToken(String resetToken);
 	
 }
