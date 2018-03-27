@@ -25,3 +25,6 @@ nbdist/
 
 ### node_modules ###
 node_modules/
+
+### setup ###
+mailserver.properties
