@@ -1,5 +1,7 @@
 # Hand Hygiene Monitoring System (H2MS)
 
+
+
 ## Build
 
 
@@ -56,6 +58,21 @@ docker-compose up
 ``Set-ExecutionPolicy -Scope CurrentUser Unrestricted``
 1. Then
 ``./buildrun.ps1``
+
+
+## Email Setup
+
+
+H2MS requires mailserver.properties for email to function.  E.g., for Gmail:
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=username
+spring.mail.password=password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+You can use mailserver.properties.template as template to create mailserver.propertiesin src/main/resources folder.S
 
 
 ## Credits
