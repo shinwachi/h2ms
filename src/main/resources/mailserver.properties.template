@@ -1,3 +1,4 @@
+####NOTICE: set the correct credentials and rename the file to mailserver.properties (DO NOT SAVE mailserver.properties TO REPOSITORY)####
 # Gmail SMTP
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
