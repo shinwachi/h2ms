@@ -1,7 +1,10 @@
 package edu.harvard.h2ms.service.report;
 
+import org.springframework.stereotype.Component;
+
 import edu.harvard.h2ms.service.utils.ReportUtils.NotificationFrequency;
 
+@Component
 public class ReportWorkerComplianceWarningMonthly extends AbstractReportWorkerComplianceWarning {
 
   long REPORTINGINTERVAL = NotificationFrequency.MONTHLY.seconds;
