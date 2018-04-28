@@ -68,6 +68,7 @@ public class UserSeeder {
         user.setEmail(email);
         user.setPassword(adminPassword);
         user.setType(adminUserType);
+        user.setNotificationFrequency("DAILY");
         Role role = roleRepository.findByName(roleType);
         if (role == null) {
           role = new Role();
