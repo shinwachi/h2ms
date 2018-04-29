@@ -71,7 +71,7 @@ public class User implements UserDetails {
   @ManyToMany(mappedBy = "users")
   private Set<Notification> notifications = new HashSet<>();
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private Set<NotificationSubscription> notificationSubscription; // = new HashSet<>();
 
   @Column(name = "enabled")

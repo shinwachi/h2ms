@@ -89,6 +89,7 @@ public class NotificationControllerTests {
   @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
   public void test_Success_NotificationController_postCompliance() throws Exception {
 
+    log.info("**************shintest1");
     String NOTIFICATION_EMAIL = EMAIL;
     String NOTIFICATION_PASSWORD = PASSWORD;
     final String accessToken = obtainAccessToken(mvc, NOTIFICATION_EMAIL, NOTIFICATION_PASSWORD);
@@ -105,7 +106,7 @@ public class NotificationControllerTests {
     objectNode1.put("reportType", NOTIFICATION_TYPE);
     objectNode1.put("notificationTitle", NOTIFICATION_TITLE);
     objectNode1.put("notificationBody", NOTIFICATION_BODY);
-
+    log.info("**************shintest2" + objectNode1.toString());
     MockHttpServletResponse result1 =
         mvc.perform(
                 post(String.format("/notifications"))
@@ -121,7 +122,7 @@ public class NotificationControllerTests {
             .andReturn()
             .getResponse();
 
-    log.debug(result1.getContentAsString());
+    log.info(result1.getContentAsString());
 
     // Subscribe 1st user
 
@@ -130,7 +131,7 @@ public class NotificationControllerTests {
     ObjectNode objectNode2 = mapper2.createObjectNode();
     objectNode2.put("notificationName", NOTIFICATION_NAME);
     objectNode2.put("email", NOTIFICATION_EMAIL);
-
+    log.info("**************shintest3");
     MockHttpServletResponse result2 =
         mvc.perform(
                 post(String.format("/notifications/subscribe"))
@@ -145,11 +146,11 @@ public class NotificationControllerTests {
             .andReturn()
             .getResponse();
 
-    log.debug(result2.getContentAsString());
+    log.info(result2.getContentAsString());
 
     Notification notification1 = notificationRepository.findOneByName(NOTIFICATION_NAME);
 
-    log.debug("Notification users: " + notification1.getUser());
+    log.info("Notification users: " + notification1.getUser());
 
     Set<User> notifiedUsers1 = notification1.getUser();
 
@@ -178,11 +179,11 @@ public class NotificationControllerTests {
             .andReturn()
             .getResponse();
 
-    log.debug(result3.getContentAsString());
+    log.info(result3.getContentAsString());
 
     Notification notification2 = notificationRepository.findOneByName(NOTIFICATION_NAME);
 
-    log.debug("Notification users: " + notification2.getUser());
+    log.info("Notification users: " + notification2.getUser());
 
     Set<User> notifiedUsers2 = notification2.getUser();
 
@@ -210,11 +211,11 @@ public class NotificationControllerTests {
             .andReturn()
             .getResponse();
 
-    log.debug(result3.getContentAsString());
+    log.info(result3.getContentAsString());
 
     Notification notification3 = notificationRepository.findOneByName(NOTIFICATION_NAME);
 
-    log.debug("Notification users: " + notification3.getUser());
+    log.info("Notification users: " + notification3.getUser());
 
     Set<User> notifiedUsers3 = notification3.getUser();
 

@@ -3,6 +3,7 @@ package edu.harvard.h2ms.domain.core;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -43,8 +44,8 @@ public class Notification {
   )
   private Set<User> users = new HashSet<>();
 
-  @OneToMany(mappedBy = "notification")
-  private Set<NotificationSubscription> notificationSubscriptions;
+  @OneToMany(mappedBy = "notification", fetch = FetchType.EAGER)
+  private Set<NotificationSubscription> notificationSubscriptions = new HashSet<>();
 
   @Column(name = "name")
   private String name;
@@ -84,18 +85,33 @@ public class Notification {
   public void addUser(User user) {
 
     log.debug("users (before) " + this.users);
+    NotificationSubscription subscription = new NotificationSubscription(user, this);
+    notificationSubscriptions.add(subscription);
     users.add(user);
     log.debug("users (after) " + this.users);
   }
 
   public void removeUser(User user) {
-    log.info("users (before) " + this.users);
+    log.debug("users (before) " + this.users);
+    NotificationSubscription removalNS = null;
+    for (NotificationSubscription ns : notificationSubscriptions) {
+      if (ns.getUser().equals(user)) {
+        removalNS = ns;
+      }
+    }
+    notificationSubscriptions.remove(removalNS);
+
     users.remove(user);
-    log.info("users (after) " + this.users);
+    log.debug("users (after) " + this.users);
   }
 
   public Set<User> getUser() {
-    return users;
+    log.info("************* notifications" + notificationSubscriptions.size());
+    return notificationSubscriptions
+        .stream()
+        .map(NotificationSubscription::getUser)
+        .collect(Collectors.toSet());
+    //    return users;
   }
 
   //  public void setUsers(Set<User> users) {

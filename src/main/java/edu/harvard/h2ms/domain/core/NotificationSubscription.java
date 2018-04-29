@@ -2,6 +2,7 @@ package edu.harvard.h2ms.domain.core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,15 +23,15 @@ public class NotificationSubscription {
   @Column(name = "ID")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "notification_id", nullable = false)
   private Notification notification;
 
-  @Column(name = "notification_interval")
+  @Column(name = "notification_interval", nullable = true)
   private Long notificationInterval;
 
   @Column(name = "last_notified_time")
@@ -41,9 +42,21 @@ public class NotificationSubscription {
     super();
   }
 
-  public NotificationSubscription(User user, long notificationInterval) {
+  public NotificationSubscription(User user, Notification notification, long notificationInterval) {
     this.user = user;
+    this.notification = notification;
     this.notificationInterval = notificationInterval;
     this.lastNotifiedTime = 0L;
+  }
+
+  public NotificationSubscription(User user, Notification notification) {
+    this.user = user;
+    this.notification = notification;
+    this.notificationInterval = null;
+    this.lastNotifiedTime = 0L;
+  }
+
+  public User getUser() {
+    return this.user;
   }
 }
