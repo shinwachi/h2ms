@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,6 +42,9 @@ public class Notification {
     inverseJoinColumns = @JoinColumn(name = "user_id")
   )
   private Set<User> users = new HashSet<>();
+
+  @OneToMany(mappedBy = "notification")
+  private Set<NotificationSubscription> notificationSubscriptions;
 
   @Column(name = "name")
   private String name;
@@ -94,9 +98,9 @@ public class Notification {
     return users;
   }
 
-  public void setUsers(Set<User> users) {
-    this.users = users;
-  }
+  //  public void setUsers(Set<User> users) {
+  //    this.users = users;
+  //  }
 
   public Long getId() {
     return id;

@@ -8,7 +8,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,6 +70,9 @@ public class User implements UserDetails {
 
   @ManyToMany(mappedBy = "users")
   private Set<Notification> notifications = new HashSet<>();
+
+  @OneToMany(mappedBy = "user")
+  private Set<NotificationSubscription> notificationSubscription; // = new HashSet<>();
 
   @Column(name = "enabled")
   private boolean enabled = true;
