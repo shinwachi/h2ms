@@ -20,7 +20,7 @@
                         {{ (user | async).firstName + ' ' + (user | async).lastName }}
                     </h5>
                 </div>
-                <mat-divider *ngIf="userDisplayName"></mat-divider>
+                <mat-divider *ngIf="user | async"></mat-divider>
 
                 <div *ngFor="let navItem of navItems">
                     <a *ngIf="!navItem.subItems" href="{{ navItem.link }}">
