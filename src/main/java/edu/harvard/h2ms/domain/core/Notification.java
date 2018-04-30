@@ -54,6 +54,9 @@ public class Notification {
   @Column(name = "notification_body")
   private String notificationBody;
 
+  @ElementCollection(fetch = FetchType.EAGER)
+  Map<String, String> notificationParameters;
+
   /**
    * Keeps track of last notification time for each user email See:
    * https://stackoverflow.com/questions/19199701/how-to-jpa-mapping-a-hashmap
@@ -75,6 +78,19 @@ public class Notification {
     this.reportType = reportType;
     this.notificationTitle = notificationTitle;
     this.notificationBody = notificationBody;
+  }
+
+  public Notification(
+      String name,
+      String reportType,
+      String notificationTitle,
+      String notificationBody,
+      Map<String, String> notificationParameters) {
+    this.name = name;
+    this.reportType = reportType;
+    this.notificationTitle = notificationTitle;
+    this.notificationBody = notificationBody;
+    this.notificationParameters = notificationParameters;
   }
 
   public void addUser(User user) {
@@ -148,6 +164,18 @@ public class Notification {
 
   public void setEmailLastNotifiedTime(String email, Long unixtime) {
     this.emailLastNotifiedTimes.put(email, unixtime);
+  }
+
+  public Map<String, String> getNotificationParameters() {
+    return this.notificationParameters;
+  }
+
+  public void setNotificationParameters(Map<String, String> notificationParameters) {
+    this.notificationParameters = notificationParameters;
+  }
+
+  public void setNotificationParameter(String key, String value) {
+    this.notificationParameters.put(key, value);
   }
 
   @Override

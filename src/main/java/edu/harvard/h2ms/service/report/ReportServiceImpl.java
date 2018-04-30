@@ -49,4 +49,17 @@ public class ReportServiceImpl implements ReportService {
     log.info("***** answer" + ans);
     return ans;
   }
+
+  @Override
+  public String requestReport(String reportType, Map<String, String> notificationParameters) {
+    log.info("report requested.  report type: " + reportType);
+    log.debug("***** cache count" + reportWorkerCache.size());
+
+    ReportWorker reportWorker = getReportWorker(reportType);
+
+    String ans = reportWorker.createReport();
+
+    log.info("***** answer" + ans);
+    return ans;
+  }
 }

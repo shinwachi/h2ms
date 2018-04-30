@@ -1,5 +1,7 @@
 package edu.harvard.h2ms.service.report;
 
+import java.util.Map;
+
 public interface ReportService {
 
   /**
@@ -8,5 +10,7 @@ public interface ReportService {
    * @param reportType
    * @return report in string
    */
+  public String requestReport(String reportType, Map<String, String> notificationParameters);
+
   public String requestReport(String reportType);
 }

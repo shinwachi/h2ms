@@ -105,6 +105,24 @@ public class NotificationControllerTests {
     objectNode1.put("reportType", NOTIFICATION_TYPE);
     objectNode1.put("notificationTitle", NOTIFICATION_TITLE);
     objectNode1.put("notificationBody", NOTIFICATION_BODY);
+    ObjectNode objectNode1b = mapper1.createObjectNode();
+    objectNode1b.put("complianceThreshold", "0.80");
+    objectNode1.set("notificationParameters", objectNode1b);
+
+    log.info("input" + objectNode1.toString());
+    /*
+     * should look like:
+     * {
+     *   "name":"myNotification1",
+     *   "reportType":"complianceWarningWeekly",
+     *   "notificationTitle":"myNotification1",
+     *   "notificationBody":"notification body text",
+     *   "notificationParameters":
+     *   {
+     *   	"complianceThreshold":"0.80"
+     *   }
+     * }
+     */
 
     MockHttpServletResponse result1 =
         mvc.perform(
@@ -148,6 +166,10 @@ public class NotificationControllerTests {
     log.debug(result2.getContentAsString());
 
     Notification notification1 = notificationRepository.findOneByName(NOTIFICATION_NAME);
+
+    log.debug(notification1.getNotificationParameters());
+
+    assertThat(notification1.getNotificationParameters().get("complianceThreshold"), is("0.80"));
 
     log.debug("Notification users: " + notification1.getUser());
 

@@ -85,7 +85,12 @@ public abstract class AbstractReportWorkerComplianceWarning implements ReportWor
       }
     }
 
-    // Create data for CSV-like string output
+    return createCsvReport(allComplianceResult);
+  }
+
+  /** Create data for CSV-like string output */
+  protected String createCsvReport(Map<Question, Map<User, Double>> allComplianceResult) {
+
     List<List<String>> data = new ArrayList<List<String>>();
     List<String> row = new ArrayList<String>();
     for (Question question : allComplianceResult.keySet()) {
