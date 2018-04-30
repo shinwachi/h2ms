@@ -29,7 +29,7 @@ public class ReportWorkerEventDump implements ReportWorker {
   }
 
   @Override
-  public String createReport() {
+  public String createReport(Map<String, String> notificationParameters) {
     // Fetches all events from the H2MS database
     List<Event> events = Lists.newArrayList(eventRepository.findAll());
 

@@ -205,6 +205,7 @@ public class NotificationControllerTests {
     Notification notification2 = notificationRepository.findOneByName(NOTIFICATION_NAME);
 
     log.debug("Notification users: " + notification2.getUser());
+    log.debug(notification2.getNotificationParameters());
 
     Set<User> notifiedUsers2 = notification2.getUser();
 

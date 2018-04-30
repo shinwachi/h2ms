@@ -44,7 +44,7 @@ public class ReportServiceImpl implements ReportService {
 
     ReportWorker reportWorker = getReportWorker(reportType);
 
-    String ans = reportWorker.createReport();
+    String ans = reportWorker.createReport(null);
 
     log.info("***** answer" + ans);
     return ans;
@@ -57,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
 
     ReportWorker reportWorker = getReportWorker(reportType);
 
-    String ans = reportWorker.createReport();
+    String ans = reportWorker.createReport(notificationParameters);
 
     log.info("***** answer" + ans);
     return ans;

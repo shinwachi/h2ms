@@ -37,15 +37,34 @@ public abstract class AbstractReportWorkerComplianceWarning implements ReportWor
 
   long REPORTINGINTERVAL = NotificationFrequency.WEEKLY.seconds;
 
+  public final String COMPLIANCETHRESHOLD = "complianceThreshold";
+
   @Override
   public String getType() {
     return "abstractComplianceWarning";
   }
 
   @Override
-  public String createReport() {
-    List<Event> events = new ArrayList<>();
+  public String createReport(Map<String, String> notificationParameters) {
 
+    double complianceThreshold = 0.80;
+    if (notificationParameters.containsKey(COMPLIANCETHRESHOLD)) {
+      try {
+        complianceThreshold = Double.parseDouble(notificationParameters.get(COMPLIANCETHRESHOLD));
+
+      } catch (NumberFormatException e) {
+        log.error("complianceThreshold has wrong number format.  Falling back to default.");
+      }
+    }
+
+    Map<Question, Map<User, Double>> allComplianceResult = getComplianceResult();
+    return createCsvReport(allComplianceResult);
+  }
+
+  /** collect user compliance data */
+  protected Map<Question, Map<User, Double>> getComplianceResult() {
+
+    List<Event> events = new ArrayList<>();
     // for all questions:
     Map<Question, Map<User, Double>> allComplianceResult = new HashMap<>();
     Hibernate.initialize(questionRepository);
@@ -85,7 +104,7 @@ public abstract class AbstractReportWorkerComplianceWarning implements ReportWor
       }
     }
 
-    return createCsvReport(allComplianceResult);
+    return allComplianceResult;
   }
 
   /** Create data for CSV-like string output */
