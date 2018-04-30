@@ -42,6 +42,23 @@ public class Notification {
   )
   private Set<User> users = new HashSet<>();
 
+  /**
+   * Keeps track of last notification time for each user email See:
+   * https://stackoverflow.com/questions/19199701/how-to-jpa-mapping-a-hashmap
+   */
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "last_notification")
+  @MapKeyColumn(name = "user_email_col")
+  @Column(name = "last_notified_time_col")
+  private Map<String, Long> emailLastNotifiedTimes;
+
+  /** Keeps track of user intervals (this is simpler than dealing with another Hibernate entity) */
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "notification_interval")
+  @MapKeyColumn(name = "user_email_col")
+  @Column(name = "notification_interval_col")
+  private Map<String, Long> emailNotificationIntervals;
+
   @Column(name = "name")
   private String name;
 
@@ -56,16 +73,6 @@ public class Notification {
 
   @ElementCollection(fetch = FetchType.EAGER)
   Map<String, String> notificationParameters;
-
-  /**
-   * Keeps track of last notification time for each user email See:
-   * https://stackoverflow.com/questions/19199701/how-to-jpa-mapping-a-hashmap
-   */
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(name = "last_notification")
-  @MapKeyColumn(name = "user_email_col")
-  @Column(name = "last_notified_time_col")
-  private Map<String, Long> emailLastNotifiedTimes;
 
   // dummy constructor
   public Notification() {
@@ -154,17 +161,21 @@ public class Notification {
     this.notificationBody = notificationBody;
   }
 
+  // Notified Times
+
   public Map<String, Long> getEmailLastNotifiedTimes() {
     return this.emailLastNotifiedTimes;
   }
 
   public void setEmailLastNotifiedTimes(Map<String, Long> emailLastNotifiedTimes) {
-    this.emailLastNotifiedTimes = emailLastNotifiedTimes;
+    this.emailNotificationIntervals = emailLastNotifiedTimes;
   }
 
   public void setEmailLastNotifiedTime(String email, Long unixtime) {
     this.emailLastNotifiedTimes.put(email, unixtime);
   }
+
+  // Parameters
 
   public Map<String, String> getNotificationParameters() {
     return this.notificationParameters;
@@ -176,6 +187,20 @@ public class Notification {
 
   public void setNotificationParameter(String key, String value) {
     this.notificationParameters.put(key, value);
+  }
+
+  // Notification Intervals
+
+  public Map<String, Long> getEmailNotificationIntervals() {
+    return this.emailNotificationIntervals;
+  }
+
+  public void setEmailNotificationIntervals(Map<String, Long> emailNotificationIntervals) {
+    this.emailNotificationIntervals = emailNotificationIntervals;
+  }
+
+  public void setEmailNotificationInterval(String email, Long unixtime) {
+    this.emailNotificationIntervals.put(email, unixtime);
   }
 
   @Override
