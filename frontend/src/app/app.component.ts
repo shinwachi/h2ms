@@ -6,6 +6,9 @@ import {NavItem} from './sidenav/nav-item';
 import {NAV_ITEMS} from './app-routing.module';
 import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
+import {LoggedInUserService} from './user/service/logged-in-user-service';
+import {ResourceUser} from './model/resourceUser';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-root',
@@ -21,6 +24,7 @@ export class AppComponent implements OnDestroy {
     mobileQuery: MediaQueryList;
     config: Config;
     navItems: NavItem[];
+    user: Observable<ResourceUser>;
 
     private _mobileQueryListener: () => void;
 
@@ -28,7 +32,8 @@ export class AppComponent implements OnDestroy {
                 private media: MediaMatcher,
                 private location: Location,
                 private configService: ConfigService,
-                private titleService: Title) {
+                private titleService: Title,
+                private loggedInUserService: LoggedInUserService) {
         this.mobileQuery = media.matchMedia('(max-width: 1050px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
@@ -38,6 +43,8 @@ export class AppComponent implements OnDestroy {
             navItem.showSubItems = navItem.isCurrentlySelected(location.path());
         }
         this.setTitle(this.config.appName);
+        this.user = Observable.of(undefined);
+        this.user = this.loggedInUserService.getUser();
     }
 
 

@@ -50,11 +50,13 @@ import {
     ResetPasswordComponent,
     SuccessfullyResetPasswordComponent
 } from './reset-password/reset-password.component';
-import { UserComponent,
+import {
+    UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
 import {ReportsChartService} from './reports/reports-chart.service';
+import {LoggedInUserService} from "./user/service/logged-in-user-service";
 
 @NgModule({
     declarations: [
@@ -119,7 +121,8 @@ import {ReportsChartService} from './reports/reports-chart.service';
         EventTemplateEntityService,
         LocationEntityService,
         ReportsChartService,
-        UserEntityService
+        UserEntityService,
+        LoggedInUserService
     ],
     bootstrap: [AppComponent]
 })
