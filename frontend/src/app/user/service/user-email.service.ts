@@ -12,11 +12,7 @@ export class UserEmailService {
     setEmail(email: string): void {
         localStorage.setItem(this.localStorageKey, email);
     }
-
-    hasEmail(): boolean {
-        return !!localStorage.getItem(this.localStorageKey);
-    }
-
+    
     getEmail(): string {
         const stored = localStorage.getItem(this.localStorageKey);
 
