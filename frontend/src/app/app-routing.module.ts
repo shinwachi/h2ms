@@ -78,7 +78,7 @@ export const NAV_ITEMS_ADMIN: NavItem[] = [
         // new NavItem('Locations', '/locations'),
         new NavItem('Users', '/users'),
         new NavItem('Export All Observations', '/export'),
-        new NavItem('Logout', '/logout')
+        new NavItem('Logout', '/login')
     ])
 ];
 
@@ -88,7 +88,7 @@ export const NAV_ITEMS_OBSERVER: NavItem[] = [
     new NavItem('About', '/about'),
     // new NavItem('Help', '/help'),
     NavItem.createNavItemWithSubItems('Settings', [
-        new NavItem('Logout', '/logout')
+        new NavItem('Logout', '/login')
         // new NavItem('Account', '/account'),
     ])
 ];
@@ -98,7 +98,7 @@ export const NAV_ITEMS_USER: NavItem[] = [
     new NavItem('About', '/about'),
     // new NavItem('Help', '/help'),
     NavItem.createNavItemWithSubItems('Settings', [
-        new NavItem('Logout', '/logout')
+        new NavItem('Logout', '/login')
         // new NavItem('Account', '/account'),
     ])
 ];
