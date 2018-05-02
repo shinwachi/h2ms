@@ -66,7 +66,7 @@ public class NotificationServiceImpl {
         // actually send the message
         emailService.sendEmail(message);
 
-        log.info("email sent " + message);
+        log.debug("email sent " + message);
         log.debug("before reset" + notification.getEmailLastNotifiedTimes().get(user.getEmail()));
 
         // finally, not the time in which the last email was sent for the user
