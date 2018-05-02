@@ -12,6 +12,7 @@ import {
 } from '../forms-common/form-controls';
 import {FormControl} from '@angular/forms';
 import {UserRoleCheckService} from '../user/service/user-role-check.service';
+import {NAV_ITEMS_ADMIN, NAV_ITEMS_ANY, NAV_ITEMS_OBSERVER, NAV_ITEMS_USER} from "../app-routing.module";
 
 @Component({
     selector: 'app-login',
@@ -53,13 +54,17 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 response => {
                     this.userEmailService.setEmail(email);
-                    if (this.userRoleCheckService.hasRoles(['ROLE_ADMIN'])) {
-                        this.router.navigate(['dashboard']);
-                    } else if (this.userRoleCheckService.hasRoles(['ROLE_OBSERVER'])) {
-                        this.router.navigate(['event']);
-                    } else {
-                        this.router.navigate(['about']);
-                    }
+                    this.userRoleCheckService.getRoles().subscribe((roles) => {
+                        if (roles.includes('ROLE_ADMIN')) {
+                            this.router.navigate(['dashboard']);
+                        } else if (roles.includes('ROLE_OBSERVER')) {
+                            this.router.navigate(['event']);
+                        } else if (roles.includes('ROLE_USER')) {
+                            this.router.navigate(['help']);
+                        } else {
+                            this.router.navigate(['help']);
+                        }
+                    });
                 },
                 error => {
                     if (error.status === 401) {
