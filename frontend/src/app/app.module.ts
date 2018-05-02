@@ -26,7 +26,7 @@ import {
     FormSubmissionDialogComponent
 } from './dynamic-form/dynamic-form.component';
 import {DynamicFormQuestionComponent} from './dynamic-form-question/dynamic-form-question.component';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent, LoginFailureDialogComponent} from './login/login.component';
 import {PrivacyComponent} from './privacy/privacy.component';
 import {EventComponent} from './event/event.component';
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -50,7 +50,8 @@ import {
     ResetPasswordComponent,
     SuccessfullyResetPasswordComponent
 } from './reset-password/reset-password.component';
-import { UserComponent,
+import {
+    UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
@@ -62,8 +63,9 @@ import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserRoleService} from './user/service/user-role.service';
 import {UserRegistrationService} from './api/registration.service';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
-import { NotFoundComponent } from './not-found/not-found.component';
+import {ErrorComponent} from './error/error.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
+import {ErrorService} from './error/error.service';
 
 @NgModule({
     declarations: [
@@ -84,7 +86,8 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         UserComponent,
         UserSubmissionSuccessDialogComponent,
         UserSubmissionFailureDialogComponent,
-        NotFoundComponent
+        ErrorComponent,
+        LoginFailureDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -113,7 +116,8 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         SuccessfullySentPasswordRecoveryEmailComponent,
         SuccessfullyResetPasswordComponent,
         UserSubmissionSuccessDialogComponent,
-        UserSubmissionFailureDialogComponent
+        UserSubmissionFailureDialogComponent,
+        LoginFailureDialogComponent
     ],
     providers: [
         MediaMatcher,
@@ -138,7 +142,8 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         UserRegistrationService,
         RoleEntityService,
         UserRoleCheckService,
-        UsersByEmailResolverService
+        UsersByEmailResolverService,
+        ErrorService
     ],
     bootstrap: [AppComponent]
 })

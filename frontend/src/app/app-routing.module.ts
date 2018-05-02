@@ -18,7 +18,7 @@ import {EventGuardService} from './auth/guards/event-guard.service';
 import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserComponent} from './user/user.component';
 import {RoleResolverService} from './role/service/role-resolver.service';
-import {NotFoundComponent} from './not-found/not-found.component';
+import {ErrorComponent} from './error/error.component';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
 
 /**
@@ -28,7 +28,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'privacy', component: PrivacyComponent},
     {path: 'about', component: AboutComponent},
-    {path: 'error', component: NotFoundComponent},
+    {path: 'error', component: ErrorComponent},
     {
         path: 'event',
         component: EventComponent,
@@ -55,7 +55,7 @@ const routes: Routes = [
         }
     },
     {path: '', redirectTo: 'reports', pathMatch: 'full'},
-    {path: '**', redirectTo: 'error', pathMatch: 'full'}
+    {path: '**', redirectTo: 'error'}
 ];
 
 /**
