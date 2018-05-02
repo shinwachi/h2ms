@@ -11,7 +11,7 @@ import {ErrorService} from './error.service';
 })
 export class ErrorComponent implements OnInit {
 
-    error = '404: Not found!';
+    error;
     config: Config;
     routeSub;
 
@@ -28,10 +28,5 @@ export class ErrorComponent implements OnInit {
 
     ngOnInit() {
         this.error = this.errorService.getError();
-        // this.routeSub = this.router.events.subscribe((event) => {
-        //     if (event instanceof NavigationStart) {
-        //         this.setError404();
-        //     }
-        // });
     }
 }
