@@ -12,7 +12,7 @@ import {
 } from '../forms-common/form-controls';
 import {FormControl} from '@angular/forms';
 import {UserRoleCheckService} from '../user/service/user-role-check.service';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {NAV_ITEMS_ADMIN, NAV_ITEMS_ANY, NAV_ITEMS_OBSERVER, NAV_ITEMS_USER} from "../app-routing.module";
 
 @Component({
     selector: 'app-login',
@@ -26,15 +26,14 @@ export class LoginComponent implements OnInit {
     passwordFormControl: FormControl = REQUIRED_PASSWORD;
     passwordErrorMessage = REQUIRED_PASSWORD_ERROR_MESSAGE;
     hide = true;
-    loginAttempts = 3;
+    loginAttempts = 2;
     config: Config;
 
     constructor(private auth: AuthService,
                 private router: Router,
                 private configService: ConfigService,
                 private userEmailService: UserEmailService,
-                private userRoleCheckService: UserRoleCheckService,
-                public dialog: MatDialog) {
+                private userRoleCheckService: UserRoleCheckService) {
         this.config = configService.getConfig();
     }
 
@@ -61,40 +60,20 @@ export class LoginComponent implements OnInit {
                         } else if (roles.includes('ROLE_OBSERVER')) {
                             this.router.navigate(['event']);
                         } else if (roles.includes('ROLE_USER')) {
-                            this.router.navigate(['about']);
+                            this.router.navigate(['help']);
                         } else {
-                            this.router.navigate(['about']);
+                            this.router.navigate(['help']);
                         }
                     });
                 },
                 error => {
-                    if (error.status === 400) {
+                    if (error.status === 401) {
+                        alert('login failed');
                         this.loginAttempts--;
                         if (this.loginAttempts === 0) {
-                            this.router.navigate(['forgot-password']);
-                        } else {
-                            this.openDialog();
+                            this.router.navigate(['password-recovery']);
                         }
                     }
                 });
     }
-
-    openDialog(): void {
-        this.dialog.open(LoginFailureDialogComponent);
-    }
 }
-
-@Component({
-    selector: 'app-login-failure-dialog',
-    templateUrl: 'login-failure-dialog.html',
-})
-export class LoginFailureDialogComponent {
-
-    constructor(public dialogRef: MatDialogRef<LoginFailureDialogComponent>) {
-    }
-
-    closeDialog(): void {
-        this.dialogRef.close();
-    }
-}
-
