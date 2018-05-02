@@ -16,6 +16,7 @@ import edu.harvard.h2ms.service.utils.ReportUtils.NotificationFrequency;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public abstract class AbstractReportWorkerComplianceTrend implements ReportWorke
 
   @Override
   @Transactional
-  public String createReport() {
+  public String createReport(Map<String, String> notificationParameters) {
     // Compare compliance:
     // 	now-2*interval -> now-interval, and now-interval -> now
     Date now = new Date();
