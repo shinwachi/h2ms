@@ -110,7 +110,7 @@ public class NotificationControllerTests {
     objectNode1b.put("complianceThreshold", "0.80");
     objectNode1.set("notificationParameters", objectNode1b);
 
-    log.info("input" + objectNode1.toString());
+    log.debug("input" + objectNode1.toString());
     /*
      * should look like:
      * {
