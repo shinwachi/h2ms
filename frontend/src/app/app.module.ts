@@ -66,6 +66,7 @@ import {UsersByEmailResolverService} from './user/service/users-by-email-resolve
 import {ErrorComponent} from './error/error.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
 import {ErrorService} from './error/error.service';
+import {ErrorGuardService} from './error/error-guard.service';
 
 @NgModule({
     declarations: [
@@ -126,6 +127,7 @@ import {ErrorService} from './error/error.service';
         AuthGuardService,
         AdminGuardService,
         EventGuardService,
+        ErrorGuardService,
         UserEmailService, {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

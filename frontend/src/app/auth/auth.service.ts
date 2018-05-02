@@ -9,6 +9,7 @@ import {ConfigService} from '../config/config.service';
 import {Config} from '../config/config';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
+import {UserEmailService} from '../user/service/user-email.service';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,8 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private configService: ConfigService,
                 @Optional() @Inject(BASE_PATH) basePath: string,
-                private router: Router) {
+                private router: Router,
+                private userEmailService: UserEmailService) {
         this.config = configService.getConfig();
         this.tokenURL = basePath ? basePath : this.config.getBackendUrl() + '/oauth/token';
         this.isRefreshingToken = false;
@@ -55,6 +57,7 @@ export class AuthService {
         if (localStorage.removeItem(this.localStorageKey)) {
             // todo: place logout request to backend
         }
+        this.userEmailService.clearEmail();
         this.router.navigate(['login']);
     }
 

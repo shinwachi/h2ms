@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Config} from '../config/config';
-import {NavigationStart, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {ConfigService} from '../config/config.service';
 import {ErrorService} from './error.service';
 
@@ -11,22 +11,18 @@ import {ErrorService} from './error.service';
 })
 export class ErrorComponent implements OnInit {
 
-    error;
     config: Config;
-    routeSub;
+    error;
+    resource;
 
     constructor(private configService: ConfigService,
                 private router: Router,
                 private errorService: ErrorService) {
         this.config = configService.getConfig();
-        this.routeSub = this.router.events.subscribe((event) => {
-            if (event instanceof NavigationStart) {
-                this.errorService.setError404();
-            }
-        });
     }
 
     ngOnInit() {
         this.error = this.errorService.getError();
+        this.resource = this.errorService.getResource();
     }
 }
