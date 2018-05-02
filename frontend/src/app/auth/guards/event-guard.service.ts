@@ -4,21 +4,14 @@ import {AuthService} from '../auth.service';
 import {Observable} from 'rxjs/Observable';
 import {UserRoleCheckService} from '../../user/service/user-role-check.service';
 import {ErrorService} from '../../error/error.service';
-import {ConfigService} from '../../config/config.service';
-import {Config} from '../../config/config';
 
 @Injectable()
 export class EventGuardService implements CanActivate {
 
-    config: Config;
-
     constructor(private router: Router,
                 private authService: AuthService,
                 private userRoleCheckService: UserRoleCheckService,
-                private errorService: ErrorService,
-                private configService: ConfigService) {
-        this.config = this.configService.getConfig();
-    }
+                private errorService: ErrorService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         const isLoggedIn = this.authService.isLoggedIn();
@@ -27,9 +20,8 @@ export class EventGuardService implements CanActivate {
             return isLoggedIn;
         }
         return this.userRoleCheckService.hasRoles(['ROLE_ADMIN', 'ROLE_OBSERVER']).flatMap((hasObserverRole) => {
-            console.log('in event guard, has observer role: ' + hasObserverRole);
             if (!hasObserverRole) {
-                this.errorService.setError403(this.config.getFrontendUrl() + this.router.url);
+                this.errorService.setError403();
                 this.router.navigate(['error']);
             }
             return Observable.of(hasObserverRole);
