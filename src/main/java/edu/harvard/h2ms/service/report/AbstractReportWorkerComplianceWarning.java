@@ -48,7 +48,7 @@ public abstract class AbstractReportWorkerComplianceWarning implements ReportWor
   public String createReport(Map<String, String> notificationParameters) {
 
     double complianceThreshold = 0.80;
-    if (notificationParameters.containsKey(COMPLIANCETHRESHOLD)) {
+    if (notificationParameters != null && notificationParameters.containsKey(COMPLIANCETHRESHOLD)) {
       try {
         complianceThreshold = Double.parseDouble(notificationParameters.get(COMPLIANCETHRESHOLD));
 
@@ -58,7 +58,35 @@ public abstract class AbstractReportWorkerComplianceWarning implements ReportWor
     }
 
     Map<Question, Map<User, Double>> allComplianceResult = getComplianceResult();
-    return createCsvReport(allComplianceResult);
+
+    /** find violators */
+    int violatorCount = 0;
+    Map<Question, Map<User, Double>> allViolators = new HashMap<>();
+    for (Question q : allComplianceResult.keySet()) {
+      Map<User, Double> allQuestionViolators = new HashMap<>();
+      for (User u : allComplianceResult.get(q).keySet()) {
+        Double r = allComplianceResult.get(q).get(u);
+        if (r < complianceThreshold) {
+          allQuestionViolators.put(u, r);
+          violatorCount++;
+        }
+      }
+      allViolators.put(q, allQuestionViolators);
+    }
+
+    String ans = createCsvReport(allViolators);
+    ans =
+        "There were "
+            + violatorCount
+            + " violations below threshold of "
+            + complianceThreshold
+            + "\n"
+            + "============================\n"
+            + "CSV:\n"
+            + "============================\n"
+            + "\"Question\",\"userEmail\",\"complianceRate\"\n"
+            + ans;
+    return ans;
   }
 
   /** collect user compliance data */
