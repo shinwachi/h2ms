@@ -3,7 +3,7 @@ import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {ConfigService} from './config/config.service';
 import {Config} from './config/config';
 import {NavItem} from './sidenav/nav-item';
-import {NAV_ITEMS_ADMIN, NAV_ITEMS_ANY, NAV_ITEMS_OBSERVER, NAV_ITEMS_USER} from './app-routing.module';
+import {NAV_ITEMS_ADMIN, NAV_ITEMS_LOGGED_OUT, NAV_ITEMS_OBSERVER, NAV_ITEMS_USER} from './app-routing.module';
 import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
 import {AuthService} from './auth/auth.service';
@@ -40,7 +40,7 @@ export class AppComponent implements OnDestroy {
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
         this.config = configService.getConfig();
-        this.navItems = NAV_ITEMS_ANY;
+        this.navItems = NAV_ITEMS_LOGGED_OUT;
         for (const navItem of this.navItems) {
             navItem.showSubItems = navItem.isCurrentlySelected(location.path());
         }
@@ -98,10 +98,9 @@ export class AppComponent implements OnDestroy {
                 } else if (roles.includes('ROLE_USER')) {
                     this.setNavItems(NAV_ITEMS_USER);
                 } else {
-                    this.setNavItems(NAV_ITEMS_ANY);
+                    this.setNavItems(NAV_ITEMS_LOGGED_OUT);
                 }
             });
         }
     }
-
 }
