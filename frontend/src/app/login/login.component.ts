@@ -61,9 +61,9 @@ export class LoginComponent implements OnInit {
                         } else if (roles.includes('ROLE_OBSERVER')) {
                             this.router.navigate(['event']);
                         } else if (roles.includes('ROLE_USER')) {
-                            this.router.navigate(['help']);
+                            this.router.navigate(['about']);
                         } else {
-                            this.router.navigate(['help']);
+                            this.router.navigate(['about']);
                         }
                     });
                 },
