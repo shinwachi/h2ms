@@ -31,8 +31,9 @@ h1.app-name {
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
 }
+
 .navbar-title:link {
-    color:inherit;
+    color: inherit;
 }
 
 .nav-item {
@@ -52,6 +53,22 @@ h1.app-name {
     background-color: #bd8401;
 }
 
-.mat-list-item {
+.mat-list-item, .user-name-wrapper {
     user-select: none;
+}
+
+.username-wrapper {
+    margin-left: 16px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+}
+
+.username {
+    display: inline-block;
+    width: 265px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    margin-bottom: 0px;
 }
