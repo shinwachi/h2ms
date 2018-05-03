@@ -57,13 +57,13 @@ h1.app-name {
     user-select: none;
 }
 
-.user-name-wrapper {
+.username-wrapper {
     margin-left: 16px;
     padding-top: 10px;
     padding-bottom: 8px;
 }
 
-.user-name {
+.username {
     display: inline-block;
     width: 265px;
     white-space: nowrap;

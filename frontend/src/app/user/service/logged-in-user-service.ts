@@ -1,10 +1,10 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {UserEntityService} from '../../index';
-import {Observable} from 'rxjs/Observable';
 import {UserEmailService} from './user-email.service';
 import {ResourceUser} from '../../model/resourceUser';
 import {AuthService} from '../../auth/auth.service';
+import {Observable} from "rxjs/Observable";
 
 /**
  * Similar to {@link UserEmailResolverService}, but it does not resolve before the page loads.
@@ -27,8 +27,6 @@ export class LoggedInUserService {
         }
 
         const email = this.userEmailService.getEmail();
-        return this.userService.findByEmailUserUsingGET(email).flatMap((res) => {
-            return res._embedded.users;
-        });
+        return this.userService.findOneByEmailUserUsingGET(email);
     }
 }

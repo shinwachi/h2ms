@@ -3,7 +3,12 @@ import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {ConfigService} from './config/config.service';
 import {Config} from './config/config';
 import {NavItem} from './sidenav/nav-item';
-import {NAV_ITEMS_ADMIN, NAV_ITEMS_ANY, NAV_ITEMS_OBSERVER, NAV_ITEMS_USER} from './app-routing.module';
+import {
+    NAV_ITEMS_ADMIN,
+    NAV_ITEMS_ANY,
+    NAV_ITEMS_OBSERVER,
+    NAV_ITEMS_USER
+} from './app-routing.module';
 import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
 import {LoggedInUserService} from './user/service/logged-in-user-service';
@@ -27,7 +32,7 @@ export class AppComponent implements OnDestroy {
     mobileQuery: MediaQueryList;
     config: Config;
     navItems: NavItem[];
-    user: Observable<ResourceUser>;
+    userDisplayName: string;
     lastLocation = '/login';
 
     private _mobileQueryListener: () => void;
@@ -51,14 +56,23 @@ export class AppComponent implements OnDestroy {
             navItem.showSubItems = navItem.isCurrentlySelected(location.path());
         }
         this.setTitle(this.config.appName);
-        this.user = Observable.of(undefined);// TODO: Try removing
-        this.user = this.loggedInUserService.getUser();
+
         this.router.events.subscribe(() => {
+            this.setUserDisplayName();
             if (this.lastLocation.match('/login') && !this.location.path().match('/login')) {
                 this.updateNav();
             }
             this.lastLocation = this.location.path();
         });
+    }
+
+    private setUserDisplayName() {
+        this.loggedInUserService.getUser().subscribe(user => {
+                if (user) {
+                    this.userDisplayName = user.firstName + ' ' + user.lastName;
+                }
+            }
+        );
     }
 
     isInProduction() {

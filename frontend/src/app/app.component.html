@@ -14,13 +14,15 @@
 
             <!--Nested nav based on: https://stackoverflow.com/questions/44374200/angular-2-material-nested-md-list-item-->
             <mat-nav-list>
-                <div *ngIf="user | async" class="user-name-wrapper">
+                <div *ngIf="userDisplayName" class="username-wrapper">
                     <i class="material-icons">account_circle</i>&nbsp;
-                    <h5 class="user-name">
-                        {{ (user | async).firstName + ' ' + (user | async).lastName }}
+                    <h5 class="username">
+                        {{
+                        userDisplayName
+                        }}
                     </h5>
                 </div>
-                <mat-divider *ngIf="user | async"></mat-divider>
+                <mat-divider *ngIf="userDisplayName"></mat-divider>
 
                 <div *ngFor="let navItem of navItems">
                     <a *ngIf="!navItem.subItems" href="{{ navItem.link }}">
