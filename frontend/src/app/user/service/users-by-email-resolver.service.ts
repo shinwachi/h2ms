@@ -13,5 +13,4 @@ export class UsersByEmailResolverService {
         const email = this.userEmailService.getEmail();
         return this.userService.findByEmailUserUsingGET(email);
     }
-
 }
