@@ -56,11 +56,13 @@ import {
 } from './forgot-password/forgot-password.component';
 import {SelectLocationComponent} from './select-location/select-location.component';
 import {ParentLocationFinder} from './location/get-parent-locations';
-import { UserComponent,
+import {
+    UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
 import {ReportsChartService} from './reports/reports-chart.service';
+import {LoggedInUserService} from "./user/service/logged-in-user-service";
 import {UserRoleResolverService} from './user/service/user-role-resolver.service';
 import {RoleEntityService} from './api/roleEntity.service';
 import {EventGuardService} from './auth/guards/event-guard.service';
@@ -68,7 +70,7 @@ import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserRoleService} from './user/service/user-role.service';
 import {UserRegistrationService} from './api/registration.service';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
-import { NotFoundComponent } from './not-found/not-found.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
 
 @NgModule({
@@ -144,6 +146,7 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         ParentLocationFinder,
         ReportsChartService,
         UserEntityService,
+        LoggedInUserService,
         UserRoleResolverService,
         RoleEntityService,
         UserRoleService,
