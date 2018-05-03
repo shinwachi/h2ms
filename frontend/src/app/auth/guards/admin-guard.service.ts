@@ -26,15 +26,10 @@ export class AdminGuardService implements CanActivate {
             this.router.navigate(['login']);
             return isLoggedIn;
         }
-        return this.userRoleCheckService.hasRoles(['ROLE_ADMIN']).flatMap((hasAdminRole) => {
-            // the default route '/' is reserved for admin, so we need to redirect them to events page
+        return this.userRoleCheckService.getRoles().flatMap((roles) => {
+            const hasAdminRole = roles.includes('ROLE_ADMIN')
             if (!hasAdminRole) {
-                const path = this.router.url;
-                if (path.match('/')) {
-                    this.router.navigate(['event']);
-                }
-                this.errorService.setError403(this.config.getFrontendUrl() + path);
-                this.router.navigate(['error']);
+                this.router.navigate(['about']);
             }
             return Observable.of(hasAdminRole);
         });
