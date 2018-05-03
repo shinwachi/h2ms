@@ -14,9 +14,11 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
     MatProgressBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatTableModule,
     MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
@@ -41,17 +43,20 @@ import {UserEntityService} from './api/userEntity.service';
 import {ReportsComponent} from './reports/reports.component';
 import {ReportsService} from './reports/reports.service';
 import {AboutComponent} from './about/about.component';
+import {LocationComponent} from './location/location.component';
+import {LocationEditComponent} from './location-edit/location-edit.component';
 import {UserEmailService} from './user/service/user-email.service';
-import {
-    ForgotPasswordComponent,
-    SuccessfullySentPasswordRecoveryEmailComponent
-} from './forgot-password/forgot-password.component';
 import {
     ResetPasswordComponent,
     SuccessfullyResetPasswordComponent
 } from './reset-password/reset-password.component';
 import {
-    UserComponent,
+    ForgotPasswordComponent,
+    SuccessfullySentPasswordRecoveryEmailComponent
+} from './forgot-password/forgot-password.component';
+import {SelectLocationComponent} from './select-location/select-location.component';
+import {ParentLocationFinder} from './location/get-parent-locations';
+import { UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
@@ -79,11 +84,14 @@ import {ErrorGuardService} from './error/error-guard.service';
         ExportComponent,
         ReportsComponent,
         FormSubmissionDialogComponent,
+        LocationComponent,
+        LocationEditComponent,
         SuccessfullySentPasswordRecoveryEmailComponent,
         SuccessfullyResetPasswordComponent,
         AboutComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent,
+        SelectLocationComponent,
         UserComponent,
         UserSubmissionSuccessDialogComponent,
         UserSubmissionFailureDialogComponent,
@@ -110,7 +118,9 @@ import {ErrorGuardService} from './error/error-guard.service';
         MatTabsModule,
         MatSelectModule,
         MatProgressBarModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTableModule,
+        MatPaginatorModule
     ],
     entryComponents: [
         FormSubmissionDialogComponent,
@@ -136,6 +146,7 @@ import {ErrorGuardService} from './error/error-guard.service';
         ReportsService,
         EventTemplateEntityService,
         LocationEntityService,
+        ParentLocationFinder,
         ReportsChartService,
         UserEntityService,
         UserRoleResolverService,
