@@ -56,11 +56,13 @@ import {
 } from './forgot-password/forgot-password.component';
 import {SelectLocationComponent} from './select-location/select-location.component';
 import {ParentLocationFinder} from './location/get-parent-locations';
-import { UserComponent,
+import {
+    UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
 import {ReportsChartService} from './reports/reports-chart.service';
+import {LoggedInUserService} from "./user/service/logged-in-user-service";
 import {UserRoleResolverService} from './user/service/user-role-resolver.service';
 import {RoleEntityService} from './api/roleEntity.service';
 import {EventGuardService} from './auth/guards/event-guard.service';
@@ -149,6 +151,7 @@ import {ErrorGuardService} from './error/error-guard.service';
         ParentLocationFinder,
         ReportsChartService,
         UserEntityService,
+        LoggedInUserService,
         UserRoleResolverService,
         RoleEntityService,
         UserRoleService,
