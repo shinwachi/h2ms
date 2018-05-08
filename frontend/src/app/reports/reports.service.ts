@@ -142,7 +142,7 @@ export class ReportsService {
                                 {value: 'employee type', viewValue: 'Employee type', disabled: false}]},
                 {name: 'Location',
                     disabled: false,
-                    groupings: [{value: 'location', viewValue: 'All', disabled: false}]}
+                    groupings: [{value: 'location', viewValue: 'All locations', disabled: false}]}
             ]});
             }
         );

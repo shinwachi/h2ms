@@ -103,9 +103,9 @@ export const NAV_ITEMS_ADMIN: NavItem[] = [
         // new NavItem('Sensors', '/sensors'),
         // new NavItem('RFIDs', '/rfids'),
         // new NavItem('People', '/people'),
-        // new NavItem('Locations', '/locations'),
         new NavItem('Users', '/users'),
-        new NavItem('Export All Observations', '/export'),
+        new NavItem('Locations', '/locations'),
+        new NavItem('Export', '/export'),
         new NavItem('Logout', '/login')
     ])
 ];

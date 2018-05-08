@@ -13,10 +13,10 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
+    MatListModule, MatPaginator, MatPaginatorModule,
     MatProgressBarModule,
     MatSelectModule,
-    MatSidenavModule,
+    MatSidenavModule, MatTable, MatTableModule,
     MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
@@ -118,7 +118,8 @@ import {LocationEditComponent} from './location-edit/location-edit.component';
         MatTabsModule,
         MatSelectModule,
         MatProgressBarModule,
-        MatDialogModule
+        MatTableModule,
+        MatPaginatorModule
     ],
     entryComponents: [
         FormSubmissionDialogComponent,
