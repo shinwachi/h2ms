@@ -181,6 +181,7 @@ public class PasswordController {
     // TODO: is there a password policy?
     userRepository.save(user);
 
+    // TODO: We should get a callback URL from the front-end instead
     URL ref;
     try {
       ref = new URL(referer);
@@ -188,25 +189,25 @@ public class PasswordController {
       throw new RuntimeException(e.getMessage());
     }
 
+    // If no port is set, getPort() returns -1, so this means it's on the
+    // default port, e.g. 80 for HTTP or 443 for HTTPS so we don't need
+    // to tack it on.
+    String port = ref.getPort() == -1 ? "" : String.format(":%d", ref.getPort());
+
     String url =
         String.format(
-            "%s://%s:%d/reset-password/%s",
-            ref.getProtocol(), ref.getHost(), ref.getPort(), user.getEmail());
+            "%s://%s%s/reset-password/%s/%s",
+            ref.getProtocol(), ref.getHost(), port, user.getEmail(), user.getResetToken());
 
     SimpleMailMessage message = new SimpleMailMessage();
 
     /** user email address * */
     message.setTo(user.getEmail());
 
-    /** uncomment for quick test: * */
-    // message.setTo("my.email.address@gmail.com");
-
     message.setSubject("H2MS: New User Registration");
     message.setText(
-        "Please visit the following url to verify your account:"
-            + url
-            + "/"
-            + user.getResetToken());
+        "Welcome to H2MS! Please visit the following url to verify your account and set your password:\n  "
+            + url);
 
     // actually send the message
     emailService.sendEmail(message);
