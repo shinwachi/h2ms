@@ -29,8 +29,10 @@ export class EventGuardService implements CanActivate {
             return isLoggedIn;
         }
         return this.userRoleCheckService.hasRoles(['ROLE_ADMIN', 'ROLE_OBSERVER']).flatMap((hasObserverRole) => {
+            console.log('in event guard, has observer role: ' + hasObserverRole);
             if (!hasObserverRole) {
-                this.router.navigate(['about']);
+                this.errorService.setError403(this.config.getFrontendUrl() + this.router.url);
+                this.router.navigate(['error']);
             }
             return Observable.of(hasObserverRole);
         });
