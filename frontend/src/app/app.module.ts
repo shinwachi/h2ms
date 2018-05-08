@@ -67,6 +67,10 @@ import {ErrorComponent} from './error/error.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
 import {ErrorService} from './error/error.service';
 import {ErrorGuardService} from './error/error-guard.service';
+import {LocationComponent} from './location/location.component';
+import {SelectLocationComponent} from './select-location/select-location.component';
+import {ParentLocationFinder} from './location/get-parent-locations';
+import {LoggedInUserService} from './user/service/logged-in-user-service';
 
 @NgModule({
     declarations: [
@@ -88,7 +92,9 @@ import {ErrorGuardService} from './error/error-guard.service';
         UserSubmissionSuccessDialogComponent,
         UserSubmissionFailureDialogComponent,
         ErrorComponent,
-        LoginFailureDialogComponent
+        LoginFailureDialogComponent,
+        LocationComponent,
+        SelectLocationComponent
     ],
     imports: [
         BrowserModule,
@@ -145,7 +151,9 @@ import {ErrorGuardService} from './error/error-guard.service';
         RoleEntityService,
         UserRoleCheckService,
         UsersByEmailResolverService,
-        ErrorService
+        ErrorService,
+        ParentLocationFinder,
+        LoggedInUserService
     ],
     bootstrap: [AppComponent]
 })

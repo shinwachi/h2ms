@@ -20,7 +20,9 @@ import {UserComponent} from './user/user.component';
 import {RoleResolverService} from './role/service/role-resolver.service';
 import {ErrorComponent} from './error/error.component';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
-import {ErrorGuardService} from "./error/error-guard.service";
+import {ErrorGuardService} from './error/error-guard.service';
+import {LocationEditComponent} from './location-edit/location-edit.component';
+import {LocationComponent} from './location/location.component';
 
 /**
  * The actual available routes. Which links are routed to which components.
@@ -41,13 +43,38 @@ const routes: Routes = [
             userByEmailResolver: UsersByEmailResolverService
         }
     },
+    {
+        path: 'locations',
+        component: LocationComponent,
+        canActivate: [AuthGuardService],
+        resolve: {
+            locationResolver: LocationResolverService
+        }
+    },
+    {
+        path: 'locations/create',
+        component: LocationEditComponent,
+        canActivate: [AuthGuardService],
+        resolve: {
+            locationResolver: LocationResolverService
+        }
+    },
+    {
+        path: 'locations/:id/edit',
+        component: LocationEditComponent,
+        canActivate: [AuthGuardService],
+        resolve: {
+            locationResolver: LocationResolverService
+        }
+    },
     {path: 'reports', component: ReportsComponent, canActivate: [AdminGuardService]},
     {path: 'export', component: ExportComponent, canActivate: [AdminGuardService]},
     // TODO: route dashboard to the DashboardComponent when it is created.
     {path: 'dashboard', redirectTo: 'reports', pathMatch: 'full', canActivate: [AdminGuardService]},
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password/:email/:resetToken', component: ResetPasswordComponent},
-    {path: 'users',
+    {
+        path: 'users',
         component: UserComponent,
         resolve: {
             usersResolver: UsersResolverService,
