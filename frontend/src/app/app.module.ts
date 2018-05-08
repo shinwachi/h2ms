@@ -71,6 +71,7 @@ import {LocationComponent} from './location/location.component';
 import {SelectLocationComponent} from './select-location/select-location.component';
 import {ParentLocationFinder} from './location/get-parent-locations';
 import {LoggedInUserService} from './user/service/logged-in-user-service';
+import {LocationEditComponent} from './location-edit/location-edit.component';
 
 @NgModule({
     declarations: [
@@ -94,7 +95,8 @@ import {LoggedInUserService} from './user/service/logged-in-user-service';
         ErrorComponent,
         LoginFailureDialogComponent,
         LocationComponent,
-        SelectLocationComponent
+        SelectLocationComponent,
+        LocationEditComponent
     ],
     imports: [
         BrowserModule,
