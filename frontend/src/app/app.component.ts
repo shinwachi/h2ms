@@ -9,6 +9,7 @@ import {Title} from '@angular/platform-browser';
 import {AuthService} from './auth/auth.service';
 import {Router} from '@angular/router';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
+import {LoggedInUserService} from './user/service/logged-in-user-service';
 
 @Component({
     selector: 'app-root',
@@ -25,12 +26,14 @@ export class AppComponent implements OnDestroy {
     config: Config;
     navItems: NavItem[];
     lastLocation = '/login';
+    userDisplayName: string;
 
     private _mobileQueryListener: () => void;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private media: MediaMatcher,
                 private location: Location,
+                private loggedInUserService: LoggedInUserService,
                 private configService: ConfigService,
                 private titleService: Title,
                 private authService: AuthService,
@@ -46,11 +49,21 @@ export class AppComponent implements OnDestroy {
         }
         this.setTitle(this.config.appName);
         this.router.events.subscribe(() => {
+            this.setUserDisplayName();
             if (this.lastLocation.match('/login') && !this.location.path().match('/login')) {
                 this.updateNav();
             }
             this.lastLocation = this.location.path();
         });
+    }
+
+    private setUserDisplayName() {
+        this.loggedInUserService.getUser().subscribe(user => {
+                if (user) {
+                    this.userDisplayName = user.firstName + ' ' + user.lastName;
+                }
+            }
+        );
     }
 
     isInProduction() {
