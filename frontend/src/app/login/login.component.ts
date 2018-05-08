@@ -12,6 +12,7 @@ import {
 } from '../forms-common/form-controls';
 import {FormControl} from '@angular/forms';
 import {UserRoleCheckService} from '../user/service/user-role-check.service';
+import {MatDialog, MatDialogRef} from '@angular/material';
 
 @Component({
     selector: 'app-login',
@@ -25,14 +26,15 @@ export class LoginComponent implements OnInit {
     passwordFormControl: FormControl = REQUIRED_PASSWORD;
     passwordErrorMessage = REQUIRED_PASSWORD_ERROR_MESSAGE;
     hide = true;
-    loginAttempts = 2;
+    loginAttempts = 3;
     config: Config;
 
     constructor(private auth: AuthService,
                 private router: Router,
                 private configService: ConfigService,
                 private userEmailService: UserEmailService,
-                private userRoleCheckService: UserRoleCheckService) {
+                private userRoleCheckService: UserRoleCheckService,
+                public dialog: MatDialog) {
         this.config = configService.getConfig();
     }
 
@@ -53,22 +55,46 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 response => {
                     this.userEmailService.setEmail(email);
-                    if (this.userRoleCheckService.hasRoles(['ROLE_ADMIN'])) {
-                        this.router.navigate(['dashboard']);
-                    } else if (this.userRoleCheckService.hasRoles(['ROLE_OBSERVER'])) {
-                        this.router.navigate(['event']);
-                    } else {
-                        this.router.navigate(['about']);
-                    }
+                    this.userRoleCheckService.getRoles().subscribe((roles) => {
+                        if (roles.includes('ROLE_ADMIN')) {
+                            this.router.navigate(['dashboard']);
+                        } else if (roles.includes('ROLE_OBSERVER')) {
+                            this.router.navigate(['event']);
+                        } else if (roles.includes('ROLE_USER')) {
+                            this.router.navigate(['about']);
+                        } else {
+                            this.router.navigate(['login']);
+                        }
+                    });
                 },
                 error => {
-                    if (error.status === 401) {
-                        alert('login failed');
+                    if (error.status === 400) {
                         this.loginAttempts--;
                         if (this.loginAttempts === 0) {
-                            this.router.navigate(['password-recovery']);
+                            this.router.navigate(['forgot-password']);
+                        } else {
+                            this.openDialog();
                         }
                     }
                 });
     }
+
+    openDialog(): void {
+        this.dialog.open(LoginFailureDialogComponent);
+    }
 }
+
+@Component({
+    selector: 'app-login-failure-dialog',
+    templateUrl: 'login-failure-dialog.html',
+})
+export class LoginFailureDialogComponent {
+
+    constructor(public dialogRef: MatDialogRef<LoginFailureDialogComponent>) {
+    }
+
+    closeDialog(): void {
+        this.dialogRef.close();
+    }
+}
+

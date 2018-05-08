@@ -13,12 +13,10 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
-    MatPaginatorModule,
+    MatListModule, MatPaginator, MatPaginatorModule,
     MatProgressBarModule,
     MatSelectModule,
-    MatSidenavModule,
-    MatTableModule,
+    MatSidenavModule, MatTable, MatTableModule,
     MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
@@ -28,7 +26,7 @@ import {
     FormSubmissionDialogComponent
 } from './dynamic-form/dynamic-form.component';
 import {DynamicFormQuestionComponent} from './dynamic-form-question/dynamic-form-question.component';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent, LoginFailureDialogComponent} from './login/login.component';
 import {PrivacyComponent} from './privacy/privacy.component';
 import {EventComponent} from './event/event.component';
 import {MediaMatcher} from '@angular/cdk/layout';
@@ -43,26 +41,21 @@ import {UserEntityService} from './api/userEntity.service';
 import {ReportsComponent} from './reports/reports.component';
 import {ReportsService} from './reports/reports.service';
 import {AboutComponent} from './about/about.component';
-import {LocationComponent} from './location/location.component';
-import {LocationEditComponent} from './location-edit/location-edit.component';
 import {UserEmailService} from './user/service/user-email.service';
-import {
-    ResetPasswordComponent,
-    SuccessfullyResetPasswordComponent
-} from './reset-password/reset-password.component';
 import {
     ForgotPasswordComponent,
     SuccessfullySentPasswordRecoveryEmailComponent
 } from './forgot-password/forgot-password.component';
-import {SelectLocationComponent} from './select-location/select-location.component';
-import {ParentLocationFinder} from './location/get-parent-locations';
+import {
+    ResetPasswordComponent,
+    SuccessfullyResetPasswordComponent
+} from './reset-password/reset-password.component';
 import {
     UserComponent,
     UserSubmissionSuccessDialogComponent,
     UserSubmissionFailureDialogComponent
 } from './user/user.component';
 import {ReportsChartService} from './reports/reports-chart.service';
-import {LoggedInUserService} from "./user/service/logged-in-user-service";
 import {UserRoleResolverService} from './user/service/user-role-resolver.service';
 import {RoleEntityService} from './api/roleEntity.service';
 import {EventGuardService} from './auth/guards/event-guard.service';
@@ -70,8 +63,15 @@ import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserRoleService} from './user/service/user-role.service';
 import {UserRegistrationService} from './api/registration.service';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
-import {NotFoundComponent} from './not-found/not-found.component';
+import {ErrorComponent} from './error/error.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
+import {ErrorService} from './error/error.service';
+import {ErrorGuardService} from './error/error-guard.service';
+import {LocationComponent} from './location/location.component';
+import {SelectLocationComponent} from './select-location/select-location.component';
+import {ParentLocationFinder} from './location/get-parent-locations';
+import {LoggedInUserService} from './user/service/logged-in-user-service';
+import {LocationEditComponent} from './location-edit/location-edit.component';
 
 @NgModule({
     declarations: [
@@ -84,18 +84,19 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         ExportComponent,
         ReportsComponent,
         FormSubmissionDialogComponent,
-        LocationComponent,
-        LocationEditComponent,
         SuccessfullySentPasswordRecoveryEmailComponent,
         SuccessfullyResetPasswordComponent,
         AboutComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent,
-        SelectLocationComponent,
         UserComponent,
         UserSubmissionSuccessDialogComponent,
         UserSubmissionFailureDialogComponent,
-        NotFoundComponent
+        ErrorComponent,
+        LoginFailureDialogComponent,
+        LocationComponent,
+        SelectLocationComponent,
+        LocationEditComponent
     ],
     imports: [
         BrowserModule,
@@ -117,7 +118,6 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         MatTabsModule,
         MatSelectModule,
         MatProgressBarModule,
-        MatDialogModule,
         MatTableModule,
         MatPaginatorModule
     ],
@@ -126,7 +126,8 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         SuccessfullySentPasswordRecoveryEmailComponent,
         SuccessfullyResetPasswordComponent,
         UserSubmissionSuccessDialogComponent,
-        UserSubmissionFailureDialogComponent
+        UserSubmissionFailureDialogComponent,
+        LoginFailureDialogComponent
     ],
     providers: [
         MediaMatcher,
@@ -135,6 +136,7 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         AuthGuardService,
         AdminGuardService,
         EventGuardService,
+        ErrorGuardService,
         UserEmailService, {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,
@@ -143,17 +145,18 @@ import {UserRoleCheckService} from './user/service/user-role-check.service';
         ReportsService,
         EventTemplateEntityService,
         LocationEntityService,
-        ParentLocationFinder,
         ReportsChartService,
         UserEntityService,
-        LoggedInUserService,
         UserRoleResolverService,
         RoleEntityService,
         UserRoleService,
         UserRegistrationService,
         RoleEntityService,
         UserRoleCheckService,
-        UsersByEmailResolverService
+        UsersByEmailResolverService,
+        ErrorService,
+        ParentLocationFinder,
+        LoggedInUserService
     ],
     bootstrap: [AppComponent]
 })

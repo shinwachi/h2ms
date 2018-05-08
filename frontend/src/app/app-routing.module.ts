@@ -11,8 +11,6 @@ import {UsersResolverService} from './user/service/users-resolver.service';
 import {QuestionResolverService} from './questions/service/question-resolver.service';
 import {ReportsComponent} from './reports/reports.component';
 import {AboutComponent} from './about/about.component';
-import {LocationComponent} from './location/location.component';
-import {LocationEditComponent} from './location-edit/location-edit.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {UserByEmailResolverService} from './user/service/user-by-email-resolver.service';
@@ -20,8 +18,11 @@ import {EventGuardService} from './auth/guards/event-guard.service';
 import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserComponent} from './user/user.component';
 import {RoleResolverService} from './role/service/role-resolver.service';
-import {NotFoundComponent} from './not-found/not-found.component';
+import {ErrorComponent} from './error/error.component';
 import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
+import {ErrorGuardService} from './error/error-guard.service';
+import {LocationEditComponent} from './location-edit/location-edit.component';
+import {LocationComponent} from './location/location.component';
 
 /**
  * The actual available routes. Which links are routed to which components.
@@ -30,7 +31,7 @@ const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'privacy', component: PrivacyComponent},
     {path: 'about', component: AboutComponent},
-    {path: 'error', component: NotFoundComponent},
+    {path: 'error', component: ErrorComponent, canDeactivate: [ErrorGuardService]},
     {
         path: 'event',
         component: EventComponent,
@@ -42,8 +43,6 @@ const routes: Routes = [
             userByEmailResolver: UsersByEmailResolverService
         }
     },
-    {path: 'reports', component: ReportsComponent, canActivate: [AuthGuardService]},
-    {path: 'export', component: ExportComponent, canActivate: [AuthGuardService]},
     {
         path: 'locations',
         component: LocationComponent,
@@ -70,19 +69,21 @@ const routes: Routes = [
     },
     {path: 'reports', component: ReportsComponent, canActivate: [AdminGuardService]},
     {path: 'export', component: ExportComponent, canActivate: [AdminGuardService]},
-    {path: 'dashboard', redirectTo: 'reports', pathMatch: 'full', canActivate: [AdminGuardService]}, // a protected page
+    // TODO: route dashboard to the DashboardComponent when it is created.
+    {path: 'dashboard', redirectTo: 'reports', pathMatch: 'full', canActivate: [AdminGuardService]},
     {path: 'forgot-password', component: ForgotPasswordComponent},
     {path: 'reset-password/:email/:resetToken', component: ResetPasswordComponent},
-    // todo: route route to dashboard when made
-    {path: 'users',
+    {
+        path: 'users',
         component: UserComponent,
         resolve: {
             usersResolver: UsersResolverService,
             rolesResolver: RoleResolverService
         }
     },
+    // todo redirect to dashboard component when made
     {path: '', redirectTo: 'reports', pathMatch: 'full'},
-    {path: '**', redirectTo: 'error', pathMatch: 'full'}
+    {path: '**', redirectTo: 'error'}
 ];
 
 /**
@@ -101,9 +102,11 @@ export const NAV_ITEMS_ADMIN: NavItem[] = [
         // new NavItem('Notifications', '/notifications'),
         // new NavItem('Sensors', '/sensors'),
         // new NavItem('RFIDs', '/rfids'),
-        new NavItem('Locations', '/locations'),
+        // new NavItem('People', '/people'),
         new NavItem('Users', '/users'),
-        new NavItem('Export All Observations', '/export')
+        new NavItem('Locations', '/locations'),
+        new NavItem('Export', '/export'),
+        new NavItem('Logout', '/login')
     ])
 ];
 
@@ -112,21 +115,23 @@ export const NAV_ITEMS_OBSERVER: NavItem[] = [
     new NavItem('Privacy', '/privacy'),
     new NavItem('About', '/about'),
     // new NavItem('Help', '/help'),
-    // NavItem.createNavItemWithSubItems('Settings', [
+    NavItem.createNavItemWithSubItems('Settings', [
+        new NavItem('Logout', '/login')
         // new NavItem('Account', '/account'),
-    // ])
+    ])
 ];
 
 export const NAV_ITEMS_USER: NavItem[] = [
     new NavItem('Privacy', '/privacy'),
-    new NavItem('About', '/about')
+    new NavItem('About', '/about'),
     // new NavItem('Help', '/help'),
-    // NavItem.createNavItemWithSubItems('Settings', [
+    NavItem.createNavItemWithSubItems('Settings', [
+        new NavItem('Logout', '/login')
         // new NavItem('Account', '/account'),
-    // ])
+    ])
 ];
 
-export const NAV_ITEMS_ANY: NavItem[] = [
+export const NAV_ITEMS_LOGGED_OUT: NavItem[] = [
     new NavItem('Login', '/login'),
     new NavItem('Privacy', '/privacy'),
     new NavItem('About', '/about')
