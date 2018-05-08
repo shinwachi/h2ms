@@ -54,9 +54,10 @@ const routes: Routes = [
             rolesResolver: RoleResolverService
         }
     },
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
+    // todo redirect to dashboard component when made
+    {path: '', redirectTo: 'reports', pathMatch: 'full'},
     // todo debug 403/404 handling to include 404 page
-    // {path: '**', redirectTo: 'error'}
+    {path: '**', redirectTo: 'error'}
 ];
 
 /**
