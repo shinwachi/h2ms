@@ -16,7 +16,6 @@ export class UserRoleService {
     hasRoles(list: [string]): Observable<boolean> {
         const email = this.userEmailService.getEmail();
         return this.userByEmailResolverService.resolve().flatMap((user) => {
-            console.log(user);
             let hasARoleFromList = false;
             const roles = user.authorities.map(role => role.authority);
             list.forEach(role => {
