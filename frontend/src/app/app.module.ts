@@ -62,7 +62,7 @@ import {EventGuardService} from './auth/guards/event-guard.service';
 import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserRoleService} from './user/service/user-role.service';
 import {UserRegistrationService} from './api/registration.service';
-import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
+import {UserByEmailResolverService} from './user/service/user-by-email-resolver.service';
 import {ErrorComponent} from './error/error.component';
 import {UserRoleCheckService} from './user/service/user-role-check.service';
 import {ErrorService} from './error/error.service';
@@ -153,7 +153,7 @@ import {LocationEditComponent} from './location-edit/location-edit.component';
         UserRegistrationService,
         RoleEntityService,
         UserRoleCheckService,
-        UsersByEmailResolverService,
+        UserByEmailResolverService,
         ErrorService,
         ParentLocationFinder,
         LoggedInUserService
