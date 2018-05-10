@@ -19,7 +19,6 @@ import {AdminGuardService} from './auth/guards/admin-guard.service';
 import {UserComponent} from './user/user.component';
 import {RoleResolverService} from './role/service/role-resolver.service';
 import {ErrorComponent} from './error/error.component';
-import {UsersByEmailResolverService} from './user/service/users-by-email-resolver.service';
 import {ErrorGuardService} from './error/error-guard.service';
 import {LocationEditComponent} from './location-edit/location-edit.component';
 import {LocationComponent} from './location/location.component';
@@ -40,7 +39,7 @@ const routes: Routes = [
             locationResolver: LocationResolverService,
             usersResolver: UsersResolverService,
             questionResolver: QuestionResolverService,
-            userByEmailResolver: UsersByEmailResolverService
+            userByEmailResolver: UserByEmailResolverService
         }
     },
     {

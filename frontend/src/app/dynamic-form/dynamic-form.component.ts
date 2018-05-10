@@ -30,7 +30,7 @@ export class DynamicFormComponent implements OnInit {
                 private eventEntityService: EventEntityService,
                 public dialog: MatDialog,
                 private actr: ActivatedRoute,
-                @Optional()@Inject(BASE_PATH) basePath: string,
+                @Optional() @Inject(BASE_PATH) basePath: string,
                 @Optional() configuration: Configuration,
                 @Optional() configService: ConfigService) {
         if (basePath) {
@@ -49,7 +49,7 @@ export class DynamicFormComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.questionControlService.toFormGroup(this.questions);
-        this.loggedInUser = this.actr.snapshot.data.userByEmailResolver._embedded.users[0];
+        this.loggedInUser = this.actr.snapshot.data.userByEmailResolver;
     }
 
     onSubmit() {
