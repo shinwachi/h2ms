@@ -17,7 +17,7 @@ export class UserRoleService {
         const email = this.userEmailService.getEmail();
         return this.userByEmailResolverService.resolve().flatMap((user) => {
             const roles = user.authorities.map(role => role.authority);
-            let hasARoleFromList = list.some(role => roles.includes(role));
+            const hasARoleFromList = list.some(role => roles.includes(role));
             return Observable.of(hasARoleFromList);
         });
     }
